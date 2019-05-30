@@ -1,3 +1,4 @@
+
 -- Schema palacasa
 CREATE SCHEMA IF NOT EXISTS `palacasa` DEFAULT CHARACTER SET utf8 ;
 USE `palacasa` ;
@@ -6,17 +7,20 @@ USE `palacasa` ;
 -- Table `palacasa`.`Cadena`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `palacasa`.`Cadena` (
-  `idCadena` INT NOT NULL,
+  `idCadena` INT auto_increment NOT NULL,
   `nombreCadena` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idCadena`))
 ENGINE = InnoDB;
+INSERT INTO `palacasa`.`cadena` (`nombreCadena`) VALUES ('Palacasa');
+
+
 
 
 -- -----------------------------------------------------
 -- Table `palacasa`.`Sucursal`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `palacasa`.`Sucursal` (
-  `idSucursal` INT NOT NULL,
+  `idSucursal` INT auto_increment NOT NULL,
   `nombreSucursal` VARCHAR(45) NOT NULL,
   `idCadena` INT NOT NULL,
   `idCiudad` VARCHAR(45) NOT NULL,
@@ -25,6 +29,12 @@ CREATE TABLE IF NOT EXISTS `palacasa`.`Sucursal` (
     FOREIGN KEY (`idCadena`)
     REFERENCES `palacasa`.`Cadena` (`idCadena`))
 ENGINE = InnoDB;
+INSERT INTO `palacasa`.`Sucursal` (`nombreSucursal`, `idCadena`, `idCiudad`) VALUES ('PalacasaMedellín', 1, 1);
+INSERT INTO `palacasa`.`Sucursal` (`nombreSucursal`, `idCadena`, `idCiudad`) VALUES ('PalacasaBogotá', 1, 2);
+INSERT INTO `palacasa`.`Sucursal` (`nombreSucursal`, `idCadena`, `idCiudad`) VALUES ('PalacasaCali', 1, 3);
+INSERT INTO `palacasa`.`Sucursal` (`nombreSucursal`, `idCadena`, `idCiudad`) VALUES ('PalacasaCartagena', 1, 4);
+
+
 
 
 -- -----------------------------------------------------
@@ -40,6 +50,18 @@ CREATE TABLE IF NOT EXISTS `palacasa`.`Cliente` (
     FOREIGN KEY (`idSucursal`)
     REFERENCES `palacasa`.`Sucursal` (`idSucursal`))
 ENGINE = InnoDB;
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (100725390, 'Valeria Suárez' , 2000-12-2, 1);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (435558235, 'Marta Mejía'    , 1972-05-7, 1);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (708526249, 'Santiago Moreno', 1987-04-14, 4);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (229013451, 'Jaime Rios'     , 1992-11-29, 2);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (439920414, 'Daniel Estrada' , 1969-08-18, 3);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (653788223, 'Camilo Pérez'   , 1980-03-3, 2);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (578335578, 'Daniel Gómez'   , 1977-04-17, 2);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (334672468, 'Pedro Castro'   , 1990-10-21, 1);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (197494023, 'Gustavo Barona' , 1993-05-25, 3);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (468995321, 'Pablo Gutierrez', 1998-09-13, 1);
+
+
 
 
 
@@ -47,17 +69,16 @@ ENGINE = InnoDB;
 -- Table `palacasa`.`Cliente_Premium`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `palacasa`.`Cliente_Premium` (
-  `idClientePremium` INT NOT NULL,
-  `nombreCliente` VARCHAR(15) NOT NULL,
-  `fecha_nacimiento` DATE  NOT NULL,
-  `cantidad_puntos` INT  NOT NULL,
-  `numero_tarjeta` VARCHAR(16) NOT NULL,
-  `idSucursal` INT NOT NULL,
-  PRIMARY KEY (`idClientePremium`, `idSucursal`),
-  CONSTRAINT `idSucursal_Cliente_Premium`
-    FOREIGN KEY (`idSucursal`)
-    REFERENCES `palacasa`.`Sucursal` (`idSucursal`))
-ENGINE = InnoDB;
+    `idClientePremium` INT NOT NULL,
+    `nombreCliente` VARCHAR(15) NOT NULL,
+    `fecha_nacimiento` DATE NOT NULL,
+    `cantidad_puntos` INT NOT NULL,
+    `numero_tarjeta` VARCHAR(16) NOT NULL,
+    `idSucursal` INT NOT NULL,
+    PRIMARY KEY (`idClientePremium` , `idSucursal`),
+    CONSTRAINT `idSucursal_Cliente_Premium` FOREIGN KEY (`idSucursal`)
+        REFERENCES `palacasa`.`Sucursal` (`idSucursal`))
+	ENGINE=INNODB;
 
 
 
@@ -65,7 +86,7 @@ ENGINE = InnoDB;
 -- Table `palacasa`.`Compra`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `palacasa`.`Compra` (
-  `idCompra` INT NOT NULL,
+  `idCompra` INT auto_increment NOT NULL,
   `idCliente` INT NOT NULL,
   PRIMARY KEY (`idCompra`, `idCliente`),
   CONSTRAINT `idCliente_Compra`
@@ -79,7 +100,7 @@ ENGINE = InnoDB;
 -- Table `palacasa`.`Compra_premium`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `palacasa`.`Compra_Premium` (
-  `idCompraPremium` INT NOT NULL,
+  `idCompraPremium` INT auto_increment NOT NULL,
   `idClientePremium` INT NOT NULL,
   PRIMARY KEY (`idCompraPremium`, `idClientePremium`),
   CONSTRAINT `idClientePremium_Compra_Premium`
@@ -93,7 +114,7 @@ ENGINE = InnoDB;
 -- Table `palacasa`.`Ciudad`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `palacasa`.`Ciudad` (
-  `idCiudad` INT NOT NULL,
+  `idCiudad` INT auto_increment NOT NULL,
   `nombreCiudad` VARCHAR(20) NOT NULL,
   `idSucursal` INT NOT NULL,
   PRIMARY KEY (`idCiudad`),
@@ -108,7 +129,7 @@ ENGINE = InnoDB;
 -- Table `palacasa`.`Proveedor`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `palacasa`.`Proveedor` (
-  `idProveedor` INT NOT NULL,
+  `idProveedor` INT auto_increment NOT NULL,
   `idCiudad` INT NOT NULL,
   `nombreProveedor` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idProveedor`),
@@ -122,7 +143,7 @@ ENGINE = InnoDB;
 -- Table `palacasa`.`Producto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `palacasa`.`Producto` (
-  `idProducto` INT NOT NULL,
+  `idProducto` INT auto_increment NOT NULL,
   `idProveedor` INT NOT NULL,
   `peso` DECIMAL NULL,
   `precio` DECIMAL NULL,
@@ -140,7 +161,7 @@ ENGINE = InnoDB;
 -- Table `palacasa`.`Compra_Premium_Producto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `palacasa`.`Compra_Premium_Producto` (
-  `idCompraPremiumProducto` INT NOT NULL,
+  `idCompraPremiumProducto` INT auto_increment NOT NULL,
   `idProducto` INT NOT NULL,
   `fecha_compra_producto` DATE NOT NULL,
   `valor_total` DECIMAL NOT NULL,
@@ -159,7 +180,7 @@ ENGINE = InnoDB;
 -- Table `palacasa`.`Compra_Producto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `palacasa`.`Compra_Producto` (
-  `idCompraProducto` INT NOT NULL,
+  `idCompraProducto` INT auto_increment NOT NULL,
   `idProducto` INT NOT NULL,
   `fecha_compra_producto` DATE NOT NULL,
   `valor_total` DECIMAL NOT NULL,
