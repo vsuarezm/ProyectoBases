@@ -50,17 +50,16 @@ CREATE TABLE IF NOT EXISTS `palacasa`.`Cliente` (
     FOREIGN KEY (`idSucursal`)
     REFERENCES `palacasa`.`Sucursal` (`idSucursal`))
 ENGINE = InnoDB;
-INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (100725390, 'Valeria Suárez' , 2000-12-2, 1);
-INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (435558235, 'Marta Mejía'    , 1972-05-7, 1);
-INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (708526249, 'Santiago Moreno', 1987-04-14, 4);
-INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (229013451, 'Jaime Rios'     , 1992-11-29, 2);
-INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (439920414, 'Daniel Estrada' , 1969-08-18, 3);
-INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (653788223, 'Camilo Pérez'   , 1980-03-3, 2);
-INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (578335578, 'Daniel Gómez'   , 1977-04-17, 2);
-INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (334672468, 'Pedro Castro'   , 1990-10-21, 1);
-INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (197494023, 'Gustavo Barona' , 1993-05-25, 3);
-INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (468995321, 'Pablo Gutierrez', 1998-09-13, 1);
-
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (100725390, 'Valeria Suárez' , '2000/12/2', 1);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (435558235, 'Marta Mejía'    , '1972/05/7', 1);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (708526249, 'Santiago Moreno', '1987/04/14', 4);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (229013451, 'Jaime Rios'     , '1992/11/29', 2);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (439920414, 'Daniel Estrada' , '1969/08/18', 3);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (578335578, 'Daniel Gómez'   , '1977/04/17', 2);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (334672468, 'Pedro Castro'   , '1990/10/21', 1);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (197494023, 'Gustavo Barona' , '1993/05/25', 3);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (468995321, 'Pablo Gutierrez', '1998/09/13', 1);
+INSERT INTO `palacasa`.`Cliente` (`idCliente`, `nombreCliente`, `fecha_nacimiento`, `idSucursal`) VALUES (653788223, 'Camilo Pérez'   , '1980/03/3', 2);
 
 
 
@@ -79,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `palacasa`.`Cliente_Premium` (
     CONSTRAINT `idSucursal_Cliente_Premium` FOREIGN KEY (`idSucursal`)
         REFERENCES `palacasa`.`Sucursal` (`idSucursal`))
 	ENGINE=INNODB;
+INSERT INTO `palacasa`.`Cliente_Premium` (`idClientePremium`, `nombreCliente`, `fecha_nacimiento`, `cantidad_puntos`, `numero_tarjeta`, `idSucursal`) VALUES (653788223, 'Camilo Pérez'   , '1980/03/3', 2);
 
 
 
