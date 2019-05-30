@@ -1,0 +1,209 @@
+-- Schema palacasa
+CREATE SCHEMA IF NOT EXISTS `palacasa` DEFAULT CHARACTER SET utf8 ;
+USE `palacasa` ;
+
+-- -----------------------------------------------------
+-- Table `palacasa`.`Cadena`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`Cadena` (
+  `idCadena` INT NOT NULL,
+  `nombreCadena` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idCadena`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `palacasa`.`Sucursal`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`Sucursal` (
+  `idSucursal` INT NOT NULL,
+  `nombreSucursal` VARCHAR(45) NOT NULL,
+  `idCadena` INT NOT NULL,
+  `idCiudad` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idSucursal`),
+  CONSTRAINT `idCadena_Sucursal`
+    FOREIGN KEY (`idCadena`)
+    REFERENCES `palacasa`.`Cadena` (`idCadena`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `palacasa`.`Cliente`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`Cliente` (
+  `idCliente` INT NOT NULL,
+  `nombreCliente` VARCHAR(15) NOT NULL,
+  `fecha_nacimiento` DATE NOT NULL,
+  `idSucursal` INT NOT NULL,
+  PRIMARY KEY (`idCliente`, `idSucursal`),
+  CONSTRAINT `idSucursal_Cliente`
+    FOREIGN KEY (`idSucursal`)
+    REFERENCES `palacasa`.`Sucursal` (`idSucursal`))
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `palacasa`.`Cliente_Premium`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`Cliente_Premium` (
+  `idClientePremium` INT NOT NULL,
+  `nombreCliente` VARCHAR(15) NOT NULL,
+  `fecha_nacimiento` DATE  NOT NULL,
+  `cantidad_puntos` INT  NOT NULL,
+  `numero_tarjeta` VARCHAR(16) NOT NULL,
+  `idSucursal` INT NOT NULL,
+  PRIMARY KEY (`idClientePremium`, `idSucursal`),
+  CONSTRAINT `idSucursal_Cliente_Premium`
+    FOREIGN KEY (`idSucursal`)
+    REFERENCES `palacasa`.`Sucursal` (`idSucursal`))
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `palacasa`.`Compra`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`Compra` (
+  `idCompra` INT NOT NULL,
+  `idCliente` INT NOT NULL,
+  PRIMARY KEY (`idCompra`, `idCliente`),
+  CONSTRAINT `idCliente_Compra`
+    FOREIGN KEY (`idCliente`)
+    REFERENCES `palacasa`.`Cliente` (`idCliente`))
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `palacasa`.`Compra_premium`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`Compra_Premium` (
+  `idCompraPremium` INT NOT NULL,
+  `idClientePremium` INT NOT NULL,
+  PRIMARY KEY (`idCompraPremium`, `idClientePremium`),
+  CONSTRAINT `idClientePremium_Compra_Premium`
+    FOREIGN KEY (`idClientePremium`)
+    REFERENCES `palacasa`.`Cliente_Premium` (`idClientePremium`))
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `palacasa`.`Ciudad`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`Ciudad` (
+  `idCiudad` INT NOT NULL,
+  `nombreCiudad` VARCHAR(20) NOT NULL,
+  `idSucursal` INT NOT NULL,
+  PRIMARY KEY (`idCiudad`),
+  CONSTRAINT `idSucursal_Ciudad`
+    FOREIGN KEY (`idSucursal`)
+    REFERENCES `palacasa`.`Sucursal` (`idSucursal`))
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `palacasa`.`Proveedor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`Proveedor` (
+  `idProveedor` INT NOT NULL,
+  `idCiudad` INT NOT NULL,
+  `nombreProveedor` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idProveedor`),
+  CONSTRAINT `idCiudad_Proveedor`
+    FOREIGN KEY (`idCiudad`)
+    REFERENCES `palacasa`.`Ciudad` (`idCiudad`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `palacasa`.`Producto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`Producto` (
+  `idProducto` INT NOT NULL,
+  `idProveedor` INT NOT NULL,
+  `peso` DECIMAL NULL,
+  `precio` DECIMAL NULL,
+  `fecha_vencimiento` DATE NULL,
+  `cantidad_del_producto` VARCHAR(45) NULL,
+  PRIMARY KEY (`idProducto`, `idProveedor`),
+  CONSTRAINT `idProveedor_Producto`
+    FOREIGN KEY (`idProveedor`)
+    REFERENCES `palacasa`.`Proveedor` (`idProveedor`))
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `palacasa`.`Compra_Premium_Producto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`Compra_Premium_Producto` (
+  `idCompraPremiumProducto` INT NOT NULL,
+  `idProducto` INT NOT NULL,
+  `fecha_compra_producto` DATE NOT NULL,
+  `valor_total` DECIMAL NOT NULL,
+  `Descuento` DECIMAL NOT NULL,
+  PRIMARY KEY (`idCompraPremiumProducto`, `idProducto`),
+  CONSTRAINT `idCompraPremiumProducto_Compra_Premium_Producto`
+    FOREIGN KEY (`idCompraPremiumProducto`)
+    REFERENCES `palacasa`.`Compra_premium` (`idCompraPremium`),
+  CONSTRAINT `idProducto_Compra_Premium_Producto`
+    FOREIGN KEY (`idProducto`)
+    REFERENCES `palacasa`.`Producto` (`idProducto`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `palacasa`.`Compra_Producto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`Compra_Producto` (
+  `idCompraProducto` INT NOT NULL,
+  `idProducto` INT NOT NULL,
+  `fecha_compra_producto` DATE NOT NULL,
+  `valor_total` DECIMAL NOT NULL,
+  PRIMARY KEY (`idCompraProducto`, `idProducto`),
+  CONSTRAINT `idProducto_Compra_Producto`
+    FOREIGN KEY (`idProducto`)
+    REFERENCES `palacasa`.`Producto` (`idProducto`),
+  CONSTRAINT `idCompraProducto_Compra_Producto`
+    FOREIGN KEY (`idCompraProducto`)
+    REFERENCES `palacasa`.`Compra` (`idCompra`))
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `palacasa`.`Lista_Proveedores`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`Lista_Proveedores` (
+  `idCiudad` INT NOT NULL,
+  `idProveedor` INT NOT NULL,
+  PRIMARY KEY (`idCiudad`, `idProveedor`),
+  CONSTRAINT `idCiudad_Lista_Proveedores`
+    FOREIGN KEY (`idCiudad`)
+    REFERENCES `palacasa`.`Ciudad` (`idCiudad`),
+  CONSTRAINT `idProveedor_Lista_Proveedores`
+    FOREIGN KEY (`idProveedor`)
+    REFERENCES `palacasa`.`Proveedor` (`idProveedor`))
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Producto_Proveedor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`Producto_Proveedor` (
+  `idProducto` INT NOT NULL,
+  `idProveedor` INT NOT NULL,
+  `fecha_distribucion` VARCHAR(45) NOT NULL,
+  `cantidad_de_productos` INT NOT NULL,
+  PRIMARY KEY (`idProducto`, `idProveedor`),
+  CONSTRAINT `idProducto_Producto_Proveedor`
+    FOREIGN KEY (`idProducto`)
+    REFERENCES `palacasa`.`Producto` (`idProducto`),
+  CONSTRAINT `idProveedor_Producto_Proveedor`
+    FOREIGN KEY (`idProveedor`)
+    REFERENCES `palacasa`.`Proveedor` (`idProveedor`))
+ENGINE = InnoDB;
