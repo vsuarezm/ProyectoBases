@@ -235,14 +235,18 @@ INSERT INTO `palacasa`.`Compra_Producto` (`idProducto`, `fecha_compra_producto`,
 CREATE TABLE IF NOT EXISTS `palacasa`.`Lista_Proveedores` (
   `nombreCiudad` VARCHAR(30) NOT NULL,
   `idProveedor` INT NOT NULL,
-  PRIMARY KEY (`idCiudad`, `idProveedor`),
-  CONSTRAINT `idCiudad_Lista_Proveedores`
-    FOREIGN KEY (`idCiudad`)
-    REFERENCES `palacasa`.`Ciudad` (`idCiudad`),
+  PRIMARY KEY (`nombreCiudad`, `idProveedor`),
+  CONSTRAINT `nombreCiudad_Lista_Proveedores`
+    FOREIGN KEY (`nombreCiudad`)
+    REFERENCES `palacasa`.`Ciudad` (`nombreCiudad`),
   CONSTRAINT `idProveedor_Lista_Proveedores`
     FOREIGN KEY (`idProveedor`)
     REFERENCES `palacasa`.`Proveedor` (`idProveedor`))
 ENGINE = InnoDB;
+INSERT INTO `palacasa`.`Lista_Proveedores` (`nombreCiudad`, `idProveedor`) VALUES ('Medellín', 1);
+INSERT INTO `palacasa`.`Lista_Proveedores` (`nombreCiudad`, `idProveedor`) VALUES ('Bogotá', 2);
+INSERT INTO `palacasa`.`Lista_Proveedores` (`nombreCiudad`, `idProveedor`) VALUES ('Cali', 3);
+INSERT INTO `palacasa`.`Lista_Proveedores` (`nombreCiudad`, `idProveedor`) VALUES ('Cartagena', 5);
 
 
 
@@ -262,3 +266,7 @@ CREATE TABLE IF NOT EXISTS `palacasa`.`Producto_Proveedor` (
     FOREIGN KEY (`idProveedor`)
     REFERENCES `palacasa`.`Proveedor` (`idProveedor`))
 ENGINE = InnoDB;
+INSERT INTO `palacasa`.`Producto_Proveedor` (`idProducto`, `idProveedor`, `fecha_distribucion`, `cantidad_de_productos`) VALUES (1, 1, '2019/05/3', 20);
+INSERT INTO `palacasa`.`Producto_Proveedor` (`idProducto`, `idProveedor`, `fecha_distribucion`, `cantidad_de_productos`) VALUES (2, 2, '2019/05/15', 10);
+INSERT INTO `palacasa`.`Producto_Proveedor` (`idProducto`, `idProveedor`, `fecha_distribucion`, `cantidad_de_productos`) VALUES (3, 3, '2019/03/8', 15);
+INSERT INTO `palacasa`.`Producto_Proveedor` (`idProducto`, `idProveedor`, `fecha_distribucion`, `cantidad_de_productos`) VALUES (4, 4, '2019/05/23', 40);
