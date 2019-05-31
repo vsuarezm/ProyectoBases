@@ -1,0 +1,11 @@
+idCliente   nombreCliente       fecha_nto  idSucursal
+(100725390, 'Valeria Suárez' , '2000/12/2', 1);
+(435558235, 'Marta Mejía'    , '1972/05/7', 1);
+(708526249, 'Santiago Moreno', '1987/04/14', 4);
+(229013451, 'Jaime Rios'     , '1992/11/29', 2);
+(439920414, 'Daniel Estrada' , '1969/08/18', 3);
+(578335578, 'Daniel Gómez'   , '1977/04/17', 2);
+(334672468, 'Pedro Castro'   , '1990/10/21', 1);
+(197494023, 'Gustavo Barona' , '1993/05/25', 3);
+(468995321, 'Pablo Gutierrez', '1998/09/13', 1);
+(653788223, 'Camilo Pérez'   , '1980/03/3', 2);
