@@ -246,7 +246,7 @@ ENGINE = InnoDB;
 INSERT INTO `palacasa`.`Lista_Proveedores` (`nombreCiudad`, `idProveedor`) VALUES ('Medellín', 1);
 INSERT INTO `palacasa`.`Lista_Proveedores` (`nombreCiudad`, `idProveedor`) VALUES ('Bogotá', 2);
 INSERT INTO `palacasa`.`Lista_Proveedores` (`nombreCiudad`, `idProveedor`) VALUES ('Cali', 3);
-INSERT INTO `palacasa`.`Lista_Proveedores` (`nombreCiudad`, `idProveedor`) VALUES ('Cartagena', 5);
+INSERT INTO `palacasa`.`Lista_Proveedores` (`nombreCiudad`, `idProveedor`) VALUES ('Cartagena', 4);
 
 
 
