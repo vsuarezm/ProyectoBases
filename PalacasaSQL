@@ -270,3 +270,35 @@ INSERT INTO `palacasa`.`Producto_Proveedor` (`idProducto`, `idProveedor`, `fecha
 INSERT INTO `palacasa`.`Producto_Proveedor` (`idProducto`, `idProveedor`, `fecha_distribucion`, `cantidad_de_productos`) VALUES (2, 2, '2019/05/15', 10);
 INSERT INTO `palacasa`.`Producto_Proveedor` (`idProducto`, `idProveedor`, `fecha_distribucion`, `cantidad_de_productos`) VALUES (3, 3, '2019/03/8', 15);
 INSERT INTO `palacasa`.`Producto_Proveedor` (`idProducto`, `idProveedor`, `fecha_distribucion`, `cantidad_de_productos`) VALUES (4, 4, '2019/05/23', 40);
+
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Administradores`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`Administradores` (
+  `usuario` VARCHAR(30) NOT NULL,
+  `email` VARCHAR(80) NOT NULL,
+  `contrasena` VARCHAR(10) NOT NULL,
+  `nombre` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`usuario`))
+ENGINE = InnoDB;
+INSERT INTO `palacasa`.`Administradores` (`usuario`, `email`, `contrasena`, `nombre`) VALUES ('cbaronac', 'cbaronac@eafit.edu.co', '1234', 'Camila Barona');
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`cambio_precios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`cambio_precios` (
+  `idCambio` INT auto_increment NOT NULL,
+  `idProducto` INT NOT NULL,
+  `precioNuevo` INT NOT NULL,
+  `precioViejo` INT NOT NULL,
+  `fecha` DATE NOT NULL,
+  `usuario` VARCHAR(30) NOT NULL,
+PRIMARY KEY (`idCambio`),
+  CONSTRAINT `idProducto_Cambio`
+    FOREIGN KEY (`idProducto`)
+    REFERENCES `palacasa`.`producto` (`idProducto`))
+ENGINE = InnoDB;
+
