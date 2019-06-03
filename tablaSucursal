@@ -1,5 +1,0 @@
-nombreSucursal     idCadena idCiudad
-('PalacasaMedellín', 1, 1);
-('PalacasaBogotá', 1, 2);
-('PalacasaCali', 1, 3);
-('PalacasaCartagena', 1, 4);
