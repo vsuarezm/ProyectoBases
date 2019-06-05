@@ -285,20 +285,43 @@ CREATE TABLE IF NOT EXISTS `palacasa`.`Administradores` (
 ENGINE = InnoDB;
 INSERT INTO `palacasa`.`Administradores` (`usuario`, `email`, `contrasena`, `nombre`) VALUES ('cbaronac', 'cbaronac@eafit.edu.co', '1234', 'Camila Barona');
 
-
 -- -----------------------------------------------------
--- Table `mydb`.`cambio_precios`
+-- Table `mydb`.`diferencia`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `palacasa`.`cambio_precios` (
-  `idCambio` INT auto_increment NOT NULL,
-  `idProducto` INT NOT NULL,
-  `precioNuevo` INT NOT NULL,
-  `precioViejo` INT NOT NULL,
-  `fecha` DATE NOT NULL,
-  `usuario` VARCHAR(30) NOT NULL,
-PRIMARY KEY (`idCambio`),
-  CONSTRAINT `idProducto_Cambio`
-    FOREIGN KEY (`idProducto`)
-    REFERENCES `palacasa`.`producto` (`idProducto`) ON DELETE CASCADE)
+CREATE TABLE IF NOT EXISTS `palacasa`.`diferencia` (
+  `id` INT auto_increment NOT NULL,
+  `resta` INT NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Funcion que me muestra el total de compras que se han registrado
+-- -----------------------------------------------------
+DELIMITER $$
+CREATE FUNCTION `totalDeComprasUniversal`()
+RETURNS INT DETERMINISTIC
+BEGIN
+declare num int;
+declare num2 int;
+select count(valor_total) into num from compra_producto;
+select count(valor_total) into num2 from compra_premium_producto;
+RETURN num +num2;
+END $$
+SELECT totalDeComprasUniversal();
+
+-- -----------------------------------------------------
+-- Procedimiento que me llena una tabla con la diferencia al aplicar un descuento del 5% a una compra
+-- (Cuanto dinero pierde Palacasa por aplicar un descuento del 5% a un cliente no premium)
+-- -----------------------------------------------------
+DELIMITER $$
+CREATE PROCEDURE `procedimiento` (in idCompra int) 
+BEGIN
+DECLARE var INT;
+DECLARE aplicar INT;
+
+select valor_total into var from compra_producto WHERE idCompraProducto = idCompra;
+SET aplicar = (var*(0.5)/100);
+INSERT INTO diferencia(`resta`) VALUES (aplicar);
+END $$
+CALL procedimiento(3);
