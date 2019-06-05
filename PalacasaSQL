@@ -225,7 +225,7 @@ ENGINE = InnoDB;
 INSERT INTO `palacasa`.`Compra_Producto` (`idProducto`, `fecha_compra_producto`, `valor_total`) VALUES (1, '2019/05/20', 2000);
 INSERT INTO `palacasa`.`Compra_Producto` (`idProducto`, `fecha_compra_producto`, `valor_total`) VALUES (2, '2019/04/8', 1500);
 INSERT INTO `palacasa`.`Compra_Producto` (`idProducto`, `fecha_compra_producto`, `valor_total`) VALUES (3, '2019/05/30', 600);
-INSERT INTO `palacasa`.`Compra_Producto` (`idProducto`, `fecha_compra_producto`, `valor_total`) VALUES (4, '2019/03/4', 2000);
+-- INSERT INTO `palacasa`.`Compra_Producto` (`idProducto`, `fecha_compra_producto`, `valor_total`) VALUES (4, '2019/03/4', 2000);
 
 
 
@@ -294,6 +294,15 @@ CREATE TABLE IF NOT EXISTS `palacasa`.`diferencia` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `mydb`.`total`
+-- ----------------------------------------------
+CREATE TABLE IF NOT EXISTS `palacasa`.`total` (
+`idtotal` INT auto_increment NOT NULL,
+`total` INT NOT NULL,
+PRIMARY KEY (`idtotal`))
+ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Funcion que me muestra el total de compras que se han registrado
@@ -324,4 +333,17 @@ select valor_total into var from compra_producto WHERE idCompraProducto = idComp
 SET aplicar = (var*(0.5)/100);
 INSERT INTO diferencia(`resta`) VALUES (aplicar);
 END $$
-CALL procedimiento(3);
+CALL procedimiento(3); 
+
+-- -----------------------------------------------------
+-- Trigger
+-- -----------------------------------------------------
+DELIMITER $$
+CREATE TRIGGER `total` AFTER INSERT ON compra_producto
+FOR EACH ROW 
+BEGIN
+DECLARE op INT;
+select SUM(valor_total) into op from compra_producto;
+INSERT INTO `total` (`total`) VALUE(op);
+END $$
+INSERT INTO `palacasa`.`Compra_Producto` (`idProducto`, `fecha_compra_producto`, `valor_total`) VALUES (4, '2019/03/4', 2000);
