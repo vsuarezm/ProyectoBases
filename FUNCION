@@ -1,0 +1,14 @@
+-- -----------------------------------------------------
+-- Funcion que me muestra el total de compras que se han registrado
+-- -----------------------------------------------------
+DELIMITER $$
+CREATE FUNCTION `totalDeComprasUniversal`()
+RETURNS INT DETERMINISTIC
+BEGIN
+declare num int;
+declare num2 int;
+select count(valor_total) into num from compra_producto;
+select count(valor_total) into num2 from compra_premium_producto;
+RETURN num +num2;
+END $$
+SELECT totalDeComprasUniversal();
